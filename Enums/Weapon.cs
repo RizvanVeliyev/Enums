@@ -12,14 +12,14 @@ namespace Enums
         public int Id { get; private set; }
         public BulletType BulletType { get; private set; }
         public int Capacity { get; private set; }
-        private Queue<Bullet> _magazine;
+        private Stack<Bullet> _magazine;
 
         public Weapon(BulletType bulletType, int capacity)
         {
             Id = _id++;
             BulletType = bulletType;
             Capacity = capacity;
-            _magazine = new Queue<Bullet>(capacity);
+            _magazine = new Stack<Bullet>(capacity);
         }
 
         public void Fill()
@@ -28,7 +28,7 @@ namespace Enums
             {
                 if (_magazine.Count < Capacity)
                 {
-                    _magazine.Enqueue(new Bullet(BulletType));
+                    _magazine.Push(new Bullet(BulletType));
                 }
             }
         }
@@ -37,7 +37,7 @@ namespace Enums
         {
             if (_magazine.Count > 0)
             {
-                Bullet firedBullet = _magazine.Dequeue();
+                Bullet firedBullet = _magazine.Pop();
                 Console.WriteLine($"Fired {firedBullet}. Bullets count: {_magazine.Count}");
             }
             else
